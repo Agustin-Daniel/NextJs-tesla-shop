@@ -1,4 +1,4 @@
-import { ShopLayout } from "@/components/layout";
+import { ShopLayout } from "@/components/layouts";
 import { ProductList } from "@/components/products";
 import { Typography } from "@mui/material";
 import { initialData } from '../database/products';
