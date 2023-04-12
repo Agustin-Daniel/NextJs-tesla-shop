@@ -2,6 +2,7 @@ import NextLink from 'next/link'
 import { Box, Button, CardActionArea, CardMedia, Grid, Link, Typography } from '@mui/material';
 import { initialData } from '../../database/products';
 import { ItemCounter } from '../ui';
+import { FC } from 'react';
 
 
 const productsInCart = [
@@ -10,9 +11,13 @@ const productsInCart = [
     initialData.products[2],
 ]
 
+interface Props { 
+    editable?: boolean
+}
 
 
-export const CartList = () => {
+
+export const CartList:FC<Props> = ({ editable = false }) => {
   return (
     <>
         {
@@ -20,7 +25,7 @@ export const CartList = () => {
                 <Grid container spacing={2} key={product.slug} sx={{ mb:1 }}>
                     <Grid item xs={3}>
                         {/* llevar a la pagina del producto */}
-                        <NextLink href='/product/slug'>
+                        <NextLink href='/product/slug' legacyBehavior>
                             <Link>
                                 <CardActionArea>
                                     <CardMedia
@@ -36,17 +41,22 @@ export const CartList = () => {
                         <Box display='flex' flexDirection='column'>
                             <Typography variant='body1'>{ product.title }</Typography>
                             <Typography variant='body1'>Talla: <strong>M</strong></Typography>
-
-                            {/* condicional */}
-                            <ItemCounter />
+                            {
+                                editable
+                                ? <ItemCounter />
+                                : <Typography>3 Items</Typography>
+                            } 
                         </Box>
                     </Grid>
                     <Grid item xs={2} display='flex' alignItems='center' flexDirection='column'>
                         <Typography variant='subtitle1'>{ `$${ product.price }` }</Typography>
-                        {/* editable */}
-                        <Button variant='text' color='secondary'>
-                            Remover
-                        </Button>
+                        {
+                            editable && (
+                                <Button variant='text' color='secondary'>
+                                    Remover
+                                </Button>   
+                            )
+                        }
                     </Grid>
                 </Grid>
             ))
